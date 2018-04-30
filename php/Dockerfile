@@ -100,6 +100,7 @@ RUN set -xe \
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
 		LDFLAGS="$PHP_LDFLAGS" \
+	&& chmod +x /usr/local/bin/docker-php-source \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
@@ -155,9 +156,10 @@ RUN set -xe \
 
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
-RUN echo "Asia/Shanghai" > /etc/timezone \
+RUN chmod +x /usr/local/bin/docker-php-ext-* /usr/local/bin/docker-php-entrypoint \
+	&&echo "Asia/Shanghai" > /etc/timezone \
     && docker-php-ext-install iconv curl mbstring \
-        xml json mcrypt mysqli pdo pdo_mysql zip \
+        xml json mysqli pdo pdo_mysql zip \
     && docker-php-ext-configure gd \
         --with-gd \
         --with-freetype-dir=/usr/include/ \

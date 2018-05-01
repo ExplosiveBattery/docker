@@ -1,8 +1,8 @@
-##Build
+## Build
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker pull liumiaocn/maria`
 
-##Simple Run
+## Run
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`docker exec -it mariadb /bin/sh`
 

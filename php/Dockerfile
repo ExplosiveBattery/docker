@@ -90,12 +90,15 @@ RUN set -xe \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		coreutils \
-		curl-dev \
 		libedit-dev \
 		libressl-dev \
-		libsodium-dev \
+		curl-dev \
+		jpeg-dev \
+		libpng-dev \
 		libxml2-dev \
+		libsodium-dev \
 		sqlite-dev \
+		freetype-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -148,8 +151,6 @@ RUN set -xe \
 	)" \
 	&& apk add --no-cache --virtual .php-rundeps $runDeps \
 	\
-	&& apk del .build-deps \
-	\
 # https://github.com/docker-library/php/issues/443
 	&& pecl update-channels \
 	&& rm -rf /tmp/pear ~/.pearrc
@@ -158,33 +159,16 @@ COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-php-ext-* /usr/local/bin/docker-php-entrypoint \
 	&&echo "Asia/Shanghai" > /etc/timezone \
-    && docker-php-ext-install iconv curl mbstring \
+    && docker-php-ext-install \
         xml json mysqli pdo pdo_mysql zip \
     && docker-php-ext-configure gd \
         --with-gd \
         --with-freetype-dir=/usr/include/ \
         --with-png-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-enable gd sodium \
-    && pecl install /pecl/redis-3.0.0.tgz \
-    && docker-php-ext-enable redis \
-    && apt-get purge -y --auto-remove \
-    && rm -rf /var/cache/apt/* \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /pecl \
-	&& php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php composer-setup.php \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/local/bin/composer \
-    && composer self-update \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
-    && composer global require "laravel/installer=~1.1" \
-    && composer global require predis/predis \
-    && wget https://phar.phpunit.de/phpunit.phar \
-    && chmod +x phpunit.phar \
-    && mv phpunit.phar /usr/local/bin/phpunit
-
+    && docker-php-ext-install gd mbstring \
+    && docker-php-ext-enable gd sodium mbstring \
+    && apk del .build-deps
 
 
 ENTRYPOINT ["docker-php-entrypoint"]

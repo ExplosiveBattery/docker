@@ -12,6 +12,6 @@ the size of container is 80.5MB.
 ### Run with nginx container
 /path/nginx/www is the path in host to storage web files
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name php-fpm -d php-fpm:7.2`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name php-fpm -v /path/nginx/www:/var/www -d php-fpm:7.2`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name nginx -p 80:80 -v /path/nginx/www:/var/www  -d --link php-fpm:php-fpm nginx:1.14.0`

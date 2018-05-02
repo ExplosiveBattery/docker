@@ -1,7 +1,7 @@
 # docker
 This repository uses to storage some files for docker containers.
 
-# Run DNMP(docker nginx mariadb php)
+## run DNMP(docker nginx mariadb php)
 /path/nginx/www is the path in host to storage web files
 /path/mariadb/data is the path in host to storage database
 

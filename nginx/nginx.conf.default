@@ -3,9 +3,9 @@ server {
     server_name  localhost;
 
     root /var/www;
-
+    index index.html index.htm index.php;
+    
     location / {
-        index index.html index.htm index.php;
         try_files $uri $uri/  $uri.php =404;
     }
 

@@ -7,6 +7,6 @@ This repository uses to storage some files for docker containers.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name mariadb -p 3306:3306 -v /path/mariadb/data:/var/lib/mysql -d liumiaocn/maria`(note: build by mariadb-second)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name php-fpm -v /path/nginx/www:/var/www --link mariadb:mariadb -d php-fpm:7.2`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name php-fpm -v /path/nginx/www:/var/www --link mariadb:mariadb --link mongodb:mongodb -d php-fpm:7.2`
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`sudo docker run --name nginx -p 80:80 -v /path/nginx/www:/var/www --link php-fpm:php-fpm -d nginx:1.14.0`
